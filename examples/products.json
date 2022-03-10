@@ -1,0 +1,197 @@
+{
+    "meta": {
+      "alerts": [],
+      "warnings": [],
+      "precision": 2,
+      "page": { "current": 1, "total_pages": 1, "total_results": 4, "size": 10 },
+      "engine": { "name": "os-product", "type": "default" },
+      "request_id": "2Y5qvfH1Sg24c2m7cZPLhA"
+    },
+    "results": [
+      {
+        "popular_point_7": { "raw": null },
+        "popular_point_14": { "raw": null },
+        "color": { "raw": "[('BLACK',), ('GRAY',)]" },
+        "sub_category": { "raw": null },
+        "description": {
+          "raw": "Y-SHAPE SEQUENCE DROP KNIT TUNIC\r\nGather on side of Y-shape Sequence trim ribbed bottom band, short droped kimono sleeve tunic well match with jeans or can wear as short dress.\r\n\r\n61% POLYESTER, 33% RAYON, 6% SPANDEX    MADE IN U.S.A."
+        },
+        "pct_1_stars": { "raw": null },
+        "pct_4_stars": { "raw": null },
+        "popular_point_30": { "raw": null },
+        "preorder_available_date": { "raw": "1900-01-01 00:00:00" },
+        "style_name": { "raw": "BT3064" },
+        "pct_2_stars": { "raw": null },
+        "is_broken": { "raw": "0" },
+        "price": { "raw": "17.75" },
+        "product_id": { "raw": "00000263" },
+        "sold_out": { "raw": "N" },
+        "brand_web_name": { "raw": "delete_btru" },
+        "_meta": {
+          "id": "doc-622a3d01b964f88012cf26a8",
+          "engine": "os-product",
+          "score": 2.8769782
+        },
+        "id": { "raw": "doc-622a3d01b964f88012cf26a8" },
+        "is_sale": { "raw": "N" },
+        "pct_5_stars": { "raw": null },
+        "image": {
+          "raw": "https://media.orangeshine.com/OSFile/OS/Pictures/None"
+        },
+        "is_active": { "raw": "N" },
+        "group_name": { "raw": null },
+        "is_preorder": { "raw": "N" },
+        "brand_name": { "raw": "DELETE_BTRU" },
+        "sale_price": { "raw": "0.0" },
+        "url": { "raw": "orangeshine.com/styles/delete_btru/bt3064/00000263" },
+        "brand_id": { "raw": "020" },
+        "style_number": { "raw": "BT3064" },
+        "group_id": { "raw": "0" },
+        "popular_point_60": { "raw": null },
+        "is_restock": { "raw": "N" },
+        "created_date": { "raw": "2009-03-23 00:00:00" },
+        "updated_date": { "raw": "2009-03-23 00:00:00" },
+        "category": { "raw": null },
+        "pct_3_stars": { "raw": null }
+      },
+      {
+        "popular_point_7": { "raw": null },
+        "popular_point_14": { "raw": null },
+        "color": { "raw": "[('BLACK',), ('GRAY',)]" },
+        "sub_category": { "raw": null },
+        "description": {
+          "raw": "Y-SHAPE SEQUENCE DROP KNIT TUNIC\r\nGather on side of Y-shape Sequence trim ribbed bottom band, short droped kimono sleeve tunic well match with jeans or can wear as short dress.\r\n\r\n61% POLYESTER, 33% RAYON, 6% SPANDEX    MADE IN U.S.A."
+        },
+        "pct_1_stars": { "raw": null },
+        "pct_4_stars": { "raw": null },
+        "popular_point_30": { "raw": null },
+        "preorder_available_date": { "raw": "1900-01-01 00:00:00" },
+        "style_name": { "raw": "BT3064" },
+        "pct_2_stars": { "raw": null },
+        "is_broken": { "raw": "0" },
+        "price": { "raw": "17.75" },
+        "product_id": { "raw": "00000263" },
+        "sold_out": { "raw": "N" },
+        "brand_web_name": { "raw": "delete_btru" },
+        "_meta": {
+          "id": "doc-622a3d01b964f88012cf26a9",
+          "engine": "os-product",
+          "score": 2.7931218
+        },
+        "id": { "raw": "doc-622a3d01b964f88012cf26a9" },
+        "is_sale": { "raw": "N" },
+        "pct_5_stars": { "raw": null },
+        "image": {
+          "raw": "https://media.orangeshine.com/OSFile/OS/Pictures/None"
+        },
+        "is_active": { "raw": "N" },
+        "group_name": { "raw": null },
+        "is_preorder": { "raw": "N" },
+        "brand_name": { "raw": "DELETE_BTRU" },
+        "sale_price": { "raw": "0.0" },
+        "url": { "raw": "orangeshine.com/styles/delete_btru/bt3064/00000263" },
+        "brand_id": { "raw": "020" },
+        "style_number": { "raw": "BT3064" },
+        "group_id": { "raw": "0" },
+        "popular_point_60": { "raw": null },
+        "is_restock": { "raw": "N" },
+        "created_date": { "raw": "2009-03-23 00:00:00" },
+        "updated_date": { "raw": "2009-03-23 00:00:00" },
+        "category": { "raw": null },
+        "pct_3_stars": { "raw": null }
+      },
+      {
+        "popular_point_7": { "raw": null },
+        "popular_point_14": { "raw": null },
+        "color": { "raw": "[('BLACK',), ('GRAY',)]" },
+        "sub_category": { "raw": null },
+        "description": {
+          "raw": "COWL NECK  W/BUCKLE WIDE ELASTIC BELT DRESS\r\nRibbed along cowl neck, gather on top of set-in sleeve, wide elastic with alligator look buckle belt dress can also match with leggings or skinny jeans.\r\n\r\n61% POLYESTER, 33% RAYON, 6% SPANDEX    MADE IN U.S.A."
+        },
+        "pct_1_stars": { "raw": null },
+        "pct_4_stars": { "raw": null },
+        "popular_point_30": { "raw": null },
+        "preorder_available_date": { "raw": "1900-01-01 00:00:00" },
+        "style_name": { "raw": "BD2987" },
+        "pct_2_stars": { "raw": null },
+        "is_broken": { "raw": "0" },
+        "price": { "raw": "18.25" },
+        "product_id": { "raw": "00000262" },
+        "sold_out": { "raw": "N" },
+        "brand_web_name": { "raw": "delete_btru" },
+        "_meta": {
+          "id": "doc-622a3d01b964f88012cf26a6",
+          "engine": "os-product",
+          "score": 2.7580314
+        },
+        "id": { "raw": "doc-622a3d01b964f88012cf26a6" },
+        "is_sale": { "raw": "N" },
+        "pct_5_stars": { "raw": null },
+        "image": {
+          "raw": "https://media.orangeshine.com/OSFile/OS/Pictures/None"
+        },
+        "is_active": { "raw": "N" },
+        "group_name": { "raw": null },
+        "is_preorder": { "raw": "N" },
+        "brand_name": { "raw": "DELETE_BTRU" },
+        "sale_price": { "raw": "0.0" },
+        "url": { "raw": "orangeshine.com/styles/delete_btru/bd2987/00000262" },
+        "brand_id": { "raw": "020" },
+        "style_number": { "raw": "BD2987" },
+        "group_id": { "raw": "0" },
+        "popular_point_60": { "raw": null },
+        "is_restock": { "raw": "N" },
+        "created_date": { "raw": "2009-03-18 00:00:00" },
+        "updated_date": { "raw": "2009-03-18 00:00:00" },
+        "category": { "raw": null },
+        "pct_3_stars": { "raw": null }
+      },
+      {
+        "popular_point_7": { "raw": null },
+        "popular_point_14": { "raw": null },
+        "color": { "raw": "[('BLACK',), ('GRAY',)]" },
+        "sub_category": { "raw": null },
+        "description": {
+          "raw": "COWL NECK  W/BUCKLE WIDE ELASTIC BELT DRESS\r\nRibbed along cowl neck, gather on top of set-in sleeve, wide elastic with alligator look buckle belt dress can also match with leggings or skinny jeans.\r\n\r\n61% POLYESTER, 33% RAYON, 6% SPANDEX    MADE IN U.S.A."
+        },
+        "pct_1_stars": { "raw": null },
+        "pct_4_stars": { "raw": null },
+        "popular_point_30": { "raw": null },
+        "preorder_available_date": { "raw": "1900-01-01 00:00:00" },
+        "style_name": { "raw": "BD2987" },
+        "pct_2_stars": { "raw": null },
+        "is_broken": { "raw": "0" },
+        "price": { "raw": "18.25" },
+        "product_id": { "raw": "00000262" },
+        "sold_out": { "raw": "N" },
+        "brand_web_name": { "raw": "delete_btru" },
+        "_meta": {
+          "id": "doc-622a3d01b964f88012cf26a7",
+          "engine": "os-product",
+          "score": 2.6764307
+        },
+        "id": { "raw": "doc-622a3d01b964f88012cf26a7" },
+        "is_sale": { "raw": "N" },
+        "pct_5_stars": { "raw": null },
+        "image": {
+          "raw": "https://media.orangeshine.com/OSFile/OS/Pictures/None"
+        },
+        "is_active": { "raw": "N" },
+        "group_name": { "raw": null },
+        "is_preorder": { "raw": "N" },
+        "brand_name": { "raw": "DELETE_BTRU" },
+        "sale_price": { "raw": "0.0" },
+        "url": { "raw": "orangeshine.com/styles/delete_btru/bd2987/00000262" },
+        "brand_id": { "raw": "020" },
+        "style_number": { "raw": "BD2987" },
+        "group_id": { "raw": "0" },
+        "popular_point_60": { "raw": null },
+        "is_restock": { "raw": "N" },
+        "created_date": { "raw": "2009-03-18 00:00:00" },
+        "updated_date": { "raw": "2009-03-18 00:00:00" },
+        "category": { "raw": null },
+        "pct_3_stars": { "raw": null }
+      }
+    ]
+  }
+  
