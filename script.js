@@ -21,11 +21,7 @@ const getInitialData = async (size) => {
 const fetchData = async (url, method = "GET", data = {}) => {
     const res = await fetch(url, {
         method,
-        credentials: "include",
-        mode: 'cors',
         headers: {
-            'Access-Control-Allow-Origin': '*',
-            Accept: "application/json",
             "Content-Type": "application/json",
             Authentication: `Bearer ${await getEnv("SEARCH_TOKEN")}`,
         },
