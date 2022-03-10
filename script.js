@@ -1,36 +1,43 @@
 const DEFAULT_SIZE = 10;
+let env;
 
-const search = async (e) => {
+const handleSearch = async (e) => {
+    e.preventDefault();
     if (e.key === "Enter") {
-        const results = await fetchData(
-            await getEnv("API_URL"),
-            "POST",
-            {
-                "query": e.target.value
-            },
-        )
-        console.log(results);
+        const query = e.target.value
+        await search(query)
     }
 }
 
-const getInitialData = async (size) => {
-    // populate("search-result-1", ["id", "title", "completed", "userId"], results, size)
-    // populate("search-result-2", ["id", "title", "completed", "userId"], results, size)
+const changeResultSize = async (size) => {
+    const query = document.getElementById("query").value
+    await search(query, size)
 }
 
-const fetchData = async (url, method = "GET", data = {}) => {
-    const res = await fetch(url, {
-        method,
-        headers: {
-            "Content-Type": "application/json",
-            Authentication: `Bearer ${await getEnv("SEARCH_TOKEN")}`,
-        },
-        body: JSON.stringify(data)
-    })
+const search = async (query, size) => {
+    const { results } = await fetchData(query)
+    const columns = [
+        "product_id",
+        "style_number",
+        "brand_name",
+        "category",
+        "color",
+        "price",
+        "description",
+        "image",
+    ]
+    const preparedResults = await prepareData(results, columns)
+    // populate("search-result-1", columns, preparedResults, size)
+    populate("search-result-2", columns, preparedResults, size)
+}
+
+const fetchData = async (query) => {
+    const url = `${env["API_URL"]}?auth_token=${env["SEARCH_TOKEN"]}&query=${query}`
+    const res = await fetch(url)
     if (!res.ok) {
-        throw new Error(`HTTP error: ${response.status}`);
+        throw new Error(`HTTP error: ${res.status}`);
     }
-    return res.json()
+    return await res.json()
 }
 
 const populate = async (tableId = "", columns = [], data = [], size = DEFAULT_SIZE) => {
@@ -67,7 +74,11 @@ const createTableBody = (tbody, columns = [], data = [], size) => {
         const tbodyRow = document.createElement("tr")
         for (col of columns) {
             const tbodyCol = document.createElement("td")
-            tbodyCol.textContent = record[col]
+            if (col === "image") {
+                const img = document.createElement("img")
+                img.src = record[col]
+                tbodyCol.appendChild(img)
+            } else { tbodyCol.textContent = record[col] }
             tbodyRow.appendChild(tbodyCol)
         }
         tbody.appendChild(tbodyRow)
@@ -75,11 +86,25 @@ const createTableBody = (tbody, columns = [], data = [], size) => {
     }
 }
 
-const getEnv = async (key) => {
+const prepareData = async (results = [], columns = []) => {
+    return results.map((obj, _) => {
+        let newObj = {}
+        for (const [key, value] of Object.entries(obj)) {
+            if (columns.includes(key)) newObj[key] = value["raw"]
+        }
+        return newObj
+    })
+}
+
+const getEnv = async (key = "") => {
     try {
         const env = await $.getJSON("env.json")
-        return env[key]
+        return key ? env[key] : env
     } catch (error) {
         throw error
     }
 }
+
+$(document).ready(async () => {
+    env = await getEnv()
+})

@@ -48,3 +48,7 @@ table th {
 label {
   margin-bottom: 0.5em;
 }
+
+img {
+  width: 100px;
+}

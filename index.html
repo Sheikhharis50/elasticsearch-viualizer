@@ -11,14 +11,14 @@
 <body>
 
   <section>
-    <label for="qs">Search Here...</label>
-    <input type="text" name="qs" id="qs" onkeyup="search(event)">
+    <label for="query">Search Here...</label>
+    <input type="text" name="query" id="query" onkeyup="handleSearch(event)">
   </section>
 
 
   <section>
     <label for="result-size">Change Results Size</label>
-    <select id="result-size" onchange="getInitialData(this.value)">
+    <select id="result-size" onchange="changeResultSize(this.value)">
       <option value="10">10</option>
       <option value="20">20</option>
       <option value="50">50</option>
@@ -27,42 +27,30 @@
     </select>
   </section>
 
-  <section>
+  <!-- <section>
     <label for="search-result-1">Production Search Results</label>
     <table id="search-result-1" class="search-results">
       <thead>
-        <tr>
-          <th>id</th>
-          <th>title</th>
-          <th>completed</th>
-          <th>userId</th>
-        </tr>
       </thead>
       <tbody>
         <tr>
           <td colspan="4" style="text-align: center;">
-            Fetching .....
+            Nothing is searched yet!
           </td>
         </tr>
       </tbody>
     </table>
-  </section>
+  </section> -->
 
   <section>
     <label for="search-result-2">New Search Results</label>
     <table id="search-result-2" class="search-results">
       <thead>
-        <tr>
-          <th>id</th>
-          <th>title</th>
-          <th>completed</th>
-          <th>userId</th>
-        </tr>
       </thead>
       <tbody>
         <tr>
           <td colspan="4" style="text-align: center;">
-            Fetching .....
+            Nothing is searched yet!
           </td>
         </tr>
       </tbody>
