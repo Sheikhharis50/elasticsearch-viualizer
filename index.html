@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Search Visualization</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="script.js"></script>
+</head>
+
+<body>
+
+  <section>
+    <label for="qs">Search Here...</label>
+    <input type="text" name="qs" id="qs" onkeyup="search(event)">
+  </section>
+
+
+  <section>
+    <label for="result-size">Change Results Size</label>
+    <select id="result-size" onchange="getInitialData(this.value)">
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+      <option value="500">500</option>
+    </select>
+  </section>
+
+  <section>
+    <label for="search-result-1">Production Search Results</label>
+    <table id="search-result-1" class="search-results">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>title</th>
+          <th>completed</th>
+          <th>userId</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4" style="text-align: center;">
+            Fetching .....
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <label for="search-result-2">New Search Results</label>
+    <table id="search-result-2" class="search-results">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>title</th>
+          <th>completed</th>
+          <th>userId</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4" style="text-align: center;">
+            Fetching .....
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</body>
+
+</html>
