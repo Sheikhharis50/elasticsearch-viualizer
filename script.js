@@ -2,10 +2,9 @@ const DEFAULT_SIZE = 10;
 
 const search = async (e) => {
     if (e.key === "Enter") {
-        console.log(e.target.value);
         const results = await fetchData(
             await getEnv("API_URL"),
-            "GET",
+            "POST",
             {
                 "query": e.target.value
             },
@@ -22,7 +21,15 @@ const getInitialData = async (size) => {
 const fetchData = async (url, method = "GET", data = {}) => {
     const res = await fetch(url, {
         method,
-        headers: { Authentication: `Bearer ${await getEnv("SEARCH_TOKEN")}` }
+        credentials: "include",
+        mode: 'cors',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authentication: `Bearer ${await getEnv("SEARCH_TOKEN")}`,
+        },
+        body: JSON.stringify(data)
     })
     if (!res.ok) {
         throw new Error(`HTTP error: ${response.status}`);
