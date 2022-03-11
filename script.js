@@ -33,7 +33,7 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
     const data = {
         query,
         page: {
-            size
+            size: parseInt(size)
         }
     }
     const headers = {
