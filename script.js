@@ -31,7 +31,7 @@ const handleSearch = async () => {
  * @param {integer} size 
  */
 const newSearch = async (query = "", size = DEFAULT_SIZE) => {
-    const url = `${env["API_URL"]}`
+    const url = `${env["NEW_SEARCH_URL"]}`
     const data = {
         query,
         page: {
@@ -39,7 +39,7 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         }
     }
     const headers = {
-        Authorization: `Bearer ${env["SEARCH_TOKEN"]}`,
+        Authorization: `Bearer ${env["NEW_SEARCH_TOKEN"]}`,
         "Content-Type": "application/json",
     }
     const { results } = await fetchData(url, "POST", data, headers)
