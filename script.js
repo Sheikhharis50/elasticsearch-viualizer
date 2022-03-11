@@ -9,7 +9,8 @@ const onKeyPress = async (e) => {
     e.preventDefault();
     if (e.key === "Enter") {
         const query = e.target.value
-        await newSearch(query)
+        const size = document.getElementById("result-size").value
+        await newSearch(query, size)
     }
 }
 
@@ -17,8 +18,9 @@ const onKeyPress = async (e) => {
  * get query from searchBar and fire search calls.
  * @param {integer} size // for custom page size.
  */
-const handleSearch = async (size) => {
+const handleSearch = async () => {
     const query = document.getElementById("query").value
+    const size = document.getElementById("result-size").value
     await newSearch(query, size)
     await prodSearch(query, size)
 }

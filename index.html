@@ -3,6 +3,7 @@
 
 <head>
   <title>Search Visualization</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="script.js"></script>
@@ -24,7 +25,7 @@
   <section class="filters">
     <div>
       <label for="result-size">Change Results Size</label>
-      <select id="result-size" onchange="handleSearch(this.value)">
+      <select id="result-size" onchange="handleSearch()">
         <option value="10">10</option>
         <option value="15" selected>15</option>
         <option value="20">20</option>
@@ -41,32 +42,36 @@
 
   <section>
     <label for="search-result-1">New Search Results</label>
-    <table id="search-result-1" class="search-results">
-      <thead>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="4" style="text-align: center;">
-            Nothing is searched yet!
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-wrapper">
+      <table id="search-result-1" class="search-results">
+        <thead>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4" style="text-align: center;">
+              Nothing is searched yet!
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section>
     <label for="search-result-2">Production Search Results</label>
-    <table id="search-result-2" class="search-results">
-      <thead>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="4" style="text-align: center;">
-            Nothing is searched yet!
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-wrapper">
+      <table id="search-result-2" class="search-results">
+        <thead>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4" style="text-align: center;">
+              Nothing is searched yet!
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
 
