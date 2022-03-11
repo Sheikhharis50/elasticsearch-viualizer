@@ -142,6 +142,12 @@ const createTableHead = (thead, columns = []) => {
  * @param {integer} size 
  */
 const createTableBody = (tbody, columns = [], data = [], size) => {
+    if (!data.length) {
+        // in-case no record is returned.
+        createNoTableBody(tbody, columns.length + 1)
+        return
+    }
+
     let i = 0;
     for (record of data) {
         if (i === parseInt(size)) break
@@ -165,6 +171,17 @@ const createTableBody = (tbody, columns = [], data = [], size) => {
         tbody.appendChild(tbodyRow)
         i++;
     }
+}
+
+const createNoTableBody = (tbody, colSpan) => {
+    const tbodyRow = document.createElement("tr")
+    const tbodyCol = document.createElement("td")
+    tbodyCol.colSpan = colSpan
+    tbodyCol.textContent = "No Record Found."
+    tbodyCol.style.textAlign = "center"
+    tbodyCol.style.color = "red"
+    tbodyRow.appendChild(tbodyCol)
+    tbody.appendChild(tbodyRow)
 }
 
 /**
