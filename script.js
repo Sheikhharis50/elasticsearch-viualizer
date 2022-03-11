@@ -43,9 +43,12 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
     const { results } = await fetchData(url, "POST", data, headers)
     const columns = [
         "product_id",
+        "style_name",
         "style_number",
+        "group_name",
         "brand_name",
         "category",
+        "sub_category",
         "color",
         "price",
         "description",
