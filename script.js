@@ -1,21 +1,46 @@
-const DEFAULT_SIZE = 10;
+const DEFAULT_SIZE = 15;
 let env;
 
-const handleSearch = async (e) => {
+/**
+ * detect Enter key in query field and fire search calls.
+ * @param {evnet} e 
+ */
+const onKeyPress = async (e) => {
     e.preventDefault();
     if (e.key === "Enter") {
         const query = e.target.value
-        await search(query)
+        await newSearch(query)
     }
 }
 
-const changeResultSize = async (size) => {
+/**
+ * get query from searchBar and fire search calls.
+ * @param {integer} size // for custom page size.
+ */
+const handleSearch = async (size) => {
     const query = document.getElementById("query").value
-    await search(query, size)
+    await newSearch(query, size)
+    await prodSearch(query, size)
 }
 
-const search = async (query, size) => {
-    const { results } = await fetchData(query)
+/**
+ * use new search and populate data in table
+ * @param {string} query 
+ * @param {integer} size 
+ */
+const newSearch = async (query = "", size = DEFAULT_SIZE) => {
+    const url = `${env["API_URL"]}`
+    const data = {
+        query,
+        page: {
+            size
+        }
+    }
+    const headers = {
+        Authorization: `Bearer ${env["SEARCH_TOKEN"]}`,
+        "Content-Type": "application/json",
+    }
+    const { results } = await fetchData(url, "POST", data, headers)
     const columns = [
         "product_id",
         "style_number",
@@ -26,20 +51,43 @@ const search = async (query, size) => {
         "description",
         "image",
     ]
-    const preparedResults = await prepareData(results, columns)
-    // populate("search-result-1", columns, preparedResults, size)
-    populate("search-result-2", columns, preparedResults, size)
+    const preparedResults = await prepareNewData(results, columns)
+    populate("search-result-1", columns, preparedResults, size)
 }
 
-const fetchData = async (query) => {
-    const url = `${env["API_URL"]}?auth_token=${env["SEARCH_TOKEN"]}&query=${query}`
-    const res = await fetch(url)
+/**
+ * use production search and populate data in table
+ * @param {string} query 
+ * @param {integer} size 
+ */
+const prodSearch = async (query = "", size = DEFAULT_SIZE) => {
+}
+
+/**
+ * Fetch Data from api `url`
+ * @param {string} url 
+ * @param {string} method 
+ * @param {object} data 
+ * @param {object} headers 
+ * @returns 
+ */
+const fetchData = async (url, method = "GET", data = {}, headers = {}) => {
+    let payload = { method, headers }
+    if (method !== "GET") payload["body"] = JSON.stringify(data)
+    const res = await fetch(url, payload)
     if (!res.ok) {
         throw new Error(`HTTP error: ${res.status}`);
     }
     return await res.json()
 }
 
+/**
+ * use to populate data into table.
+ * @param {string} tableId 
+ * @param {array} columns 
+ * @param {array} data 
+ * @param {integer} size 
+ */
 const populate = async (tableId = "", columns = [], data = [], size = DEFAULT_SIZE) => {
     // initialize table
     const table = document.getElementById(tableId)
@@ -57,8 +105,20 @@ const populate = async (tableId = "", columns = [], data = [], size = DEFAULT_SI
     createTableBody(tbody, columns, data, size)
 }
 
+/**
+ * use to create head of the table
+ * @param {htmlElement} thead 
+ * @param {array} columns 
+ */
 const createTableHead = (thead, columns = []) => {
+    // initialize the row
     const theadRow = document.createElement("tr")
+
+    // store index
+    const indexCol = document.createElement("th")
+    indexCol.textContent = "#"
+    theadRow.appendChild(indexCol)
+
     for (col of columns) {
         const theadCol = document.createElement("th")
         theadCol.textContent = col
@@ -67,12 +127,26 @@ const createTableHead = (thead, columns = []) => {
     thead.appendChild(theadRow)
 }
 
+/**
+ * use to create head of the table
+ * @param {htmlElement} tbody 
+ * @param {array} columns 
+ * @param {array} data 
+ * @param {integer} size 
+ */
 const createTableBody = (tbody, columns = [], data = [], size) => {
     let i = 0;
     for (record of data) {
         if (i === parseInt(size)) break
+        // initialize the row
         const tbodyRow = document.createElement("tr")
+        // store index
+        const indexCol = document.createElement("td")
+        indexCol.textContent = i + 1
+        tbodyRow.appendChild(indexCol)
+
         for (col of columns) {
+            // store column value
             const tbodyCol = document.createElement("td")
             if (col === "image") {
                 const img = document.createElement("img")
@@ -86,7 +160,14 @@ const createTableBody = (tbody, columns = [], data = [], size) => {
     }
 }
 
-const prepareData = async (results = [], columns = []) => {
+/**
+ * use to prepare new search data before poplating to the 
+ * table.
+ * @param {array} results 
+ * @param {array} columns 
+ * @returns 
+ */
+const prepareNewData = async (results = [], columns = []) => {
     return results.map((obj, _) => {
         let newObj = {}
         for (const [key, value] of Object.entries(obj)) {
@@ -96,6 +177,11 @@ const prepareData = async (results = [], columns = []) => {
     })
 }
 
+/**
+ * load env.json file when document is loaded.
+ * @param {string} key 
+ * @returns 
+ */
 const getEnv = async (key = "") => {
     try {
         const env = await $.getJSON("env.json")

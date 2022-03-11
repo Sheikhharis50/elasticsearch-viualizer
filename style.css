@@ -13,11 +13,6 @@ section {
   margin-top: 0.5rem;
 }
 
-#qs {
-  width: 50%;
-  margin-bottom: 1rem;
-}
-
 table {
   border-collapse: collapse;
   width: 100%;
@@ -45,10 +40,27 @@ table th {
   color: white;
 }
 
-label {
+label,
+input,
+select {
   margin-bottom: 0.5em;
 }
 
 img {
   width: 100px;
+}
+
+#qs {
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+.filters {
+  flex-direction: row;
+  gap: 1em;
+}
+
+.filters div {
+  display: flex;
+  flex-direction: column;
 }

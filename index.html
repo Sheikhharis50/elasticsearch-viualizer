@@ -12,23 +12,30 @@
 
   <section>
     <label for="query">Search Here...</label>
-    <input type="text" name="query" id="query" onkeyup="handleSearch(event)">
+    <input type="text" name="query" id="query" onkeyup="onKeyPress(event)">
+    <button id="query-btn" onclick="handleSearch()">Search</button>
   </section>
 
+  <section class="filters">
+    <div>
+      <label for="result-size">Change Results Size</label>
+      <select id="result-size" onchange="handleSearch(this.value)">
+        <option value="10">10</option>
+        <option value="15" selected>15</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="500">500</option>
+      </select>
+    </div>
+    <div>
+      <label for="engine">Engine Name</label>
+      <input type="text" name="engine" id="engine" value="os-product" disabled>
+    </div>
+  </section>
 
   <section>
-    <label for="result-size">Change Results Size</label>
-    <select id="result-size" onchange="changeResultSize(this.value)">
-      <option value="10">10</option>
-      <option value="20">20</option>
-      <option value="50">50</option>
-      <option value="100">100</option>
-      <option value="500">500</option>
-    </select>
-  </section>
-
-  <!-- <section>
-    <label for="search-result-1">Production Search Results</label>
+    <label for="search-result-1">New Search Results</label>
     <table id="search-result-1" class="search-results">
       <thead>
       </thead>
@@ -40,10 +47,10 @@
         </tr>
       </tbody>
     </table>
-  </section> -->
+  </section>
 
   <section>
-    <label for="search-result-2">New Search Results</label>
+    <label for="search-result-2">Production Search Results</label>
     <table id="search-result-2" class="search-results">
       <thead>
       </thead>
@@ -56,6 +63,8 @@
       </tbody>
     </table>
   </section>
+
+
 
 </body>
 
