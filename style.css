@@ -13,6 +13,10 @@ section {
   margin-top: 0.5rem;
 }
 
+section:first-child {
+  margin-top: 0;
+}
+
 table {
   border-collapse: collapse;
   width: 100%;
@@ -63,4 +67,20 @@ img {
 .filters div {
   display: flex;
   flex-direction: column;
+}
+
+.loader {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.loader .emoji {
+  font-size: 60px;
+  width: min-content;
 }

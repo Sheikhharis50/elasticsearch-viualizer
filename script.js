@@ -74,7 +74,9 @@ const prodSearch = async (query = "", size = DEFAULT_SIZE) => {
 const fetchData = async (url, method = "GET", data = {}, headers = {}) => {
     let payload = { method, headers }
     if (method !== "GET") payload["body"] = JSON.stringify(data)
+    await show(".loader", "flex")
     const res = await fetch(url, payload)
+    await hide(".loader")
     if (!res.ok) {
         throw new Error(`HTTP error: ${res.status}`);
     }
@@ -161,6 +163,37 @@ const createTableBody = (tbody, columns = [], data = [], size) => {
 }
 
 /**
+ * initate loader
+ */
+const initLoader = async () => {
+    const loader = document.querySelector('.loader');
+    const emoji = loader.querySelector('.emoji');
+    const emojis = ["🕐", "🕜", "🕑", "🕝", "🕒", "🕞", "🕓", "🕟", "🕔", "🕠", "🕕", "🕡", "🕖", "🕢", "🕗", "🕣", "🕘", "🕤", "🕙", "🕥", "🕚", "🕦", "🕛", "🕧"];
+    const interval = 125;
+
+    setInterval(() => {
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    }, interval);
+}
+
+/**
+ * show html element
+ * @param {string} element 
+ * @param {string} value 
+ */
+const show = async (element, value = "unset") => {
+    document.querySelector(element).style.display = value;
+}
+
+/**
+ * hide html element
+ * @param {string} element 
+ */
+const hide = async (element) => {
+    document.querySelector(element).style.display = "none";
+}
+
+/**
  * use to prepare new search data before poplating to the 
  * table.
  * @param {array} results 
@@ -193,4 +226,5 @@ const getEnv = async (key = "") => {
 
 $(document).ready(async () => {
     env = await getEnv()
+    await initLoader()
 })
