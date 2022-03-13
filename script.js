@@ -31,7 +31,8 @@ const handleSearch = async () => {
  * @param {integer} size 
  */
 const newSearch = async (query = "", size = DEFAULT_SIZE) => {
-    const url = `${env["NEW_SEARCH_URL"]}`
+    const engine = document.getElementById('engine').value
+    const url = `${env["NEW_SEARCH_URL"]}/${engine}/search`
     const data = {
         query,
         page: {
