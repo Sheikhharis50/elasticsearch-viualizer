@@ -1,16 +1,23 @@
 const DEFAULT_SIZE = 15;
-let env;
+const SUGGESTIONS_SIZE = 5;
+let env, searchWrapper, suggBox, queryBox;
 
 /**
- * detect Enter key in query field and fire search calls.
+ * detect Enter key in query field and fire search calls 
+ * or suggestions call.
  * @param {evnet} e 
  */
 const onKeyPress = async (e) => {
     e.preventDefault();
+    const query = e.target.value
     if (e.key === "Enter") {
-        const query = e.target.value
         const size = document.getElementById("result-size").value
         await newSearch(query, size)
+    } else {
+        if (query) {
+            await newSearchSuggestions(query)
+        }
+        else { searchWrapper.classList.remove("active"); }
     }
 }
 
@@ -19,7 +26,7 @@ const onKeyPress = async (e) => {
  * @param {integer} size // for custom page size.
  */
 const handleSearch = async () => {
-    const query = document.getElementById("query").value
+    const query = queryBox.value
     const size = document.getElementById("result-size").value
     await newSearch(query, size)
     await prodSearch(query, size)
@@ -70,6 +77,41 @@ const prodSearch = async (query = "", size = DEFAULT_SIZE) => {
 }
 
 /**
+ * use to get suggestions according to query.
+ * @param {string} query 
+ * @param {integer} size 
+ */
+const newSearchSuggestions = async (query = "", size = SUGGESTIONS_SIZE) => {
+    const engine = document.getElementById('engine').value
+    const url = `${env["NEW_SEARCH_URL"]}/${engine}/query_suggestion`
+    const columns = [
+        "style_name",
+        // "group_name",
+        "brand_name",
+        "category",
+        // "sub_category",
+        "colors",
+    ]
+    const data = {
+        query,
+        types: {
+            documents: {
+                fields: columns
+            }
+        },
+        size
+    }
+    const headers = {
+        Authorization: `Bearer ${env["NEW_SEARCH_TOKEN"]}`,
+        "Content-Type": "application/json",
+    }
+    const { results } = await fetchData(url, "POST", data, headers, false)
+    const preparedResults = await prepareNewSuggestionsData(results, columns)
+    console.log(preparedResults);
+    await makeSuggestions(preparedResults)
+}
+
+/**
  * Fetch Data from api `url`
  * @param {string} url 
  * @param {string} method 
@@ -77,12 +119,12 @@ const prodSearch = async (query = "", size = DEFAULT_SIZE) => {
  * @param {object} headers 
  * @returns 
  */
-const fetchData = async (url, method = "GET", data = {}, headers = {}) => {
+const fetchData = async (url, method = "GET", data = {}, headers = {}, loader = true) => {
     let payload = { method, headers }
     if (method !== "GET") payload["body"] = JSON.stringify(data)
-    await show(".loader", "flex")
+    if (loader) await show(".loader", "flex")
     const res = await fetch(url, payload)
-    await hide(".loader")
+    if (loader) await hide(".loader")
     if (!res.ok) {
         throw new Error(`HTTP error: ${res.status}`);
     }
@@ -234,6 +276,63 @@ const prepareNewData = async (results = [], columns = []) => {
 }
 
 /**
+ * use to prepare new search data before poplating to the 
+ * table.
+ * @param {array} results 
+ * @param {array} columns 
+ * @returns 
+ */
+const prepareNewSuggestionsData = async (results = [], columns = []) => {
+    return results?.documents.map((obj, _) => {
+        return obj.suggestion
+    })
+}
+
+/**
+ * use to select element from suggestions
+ * @param {htmlElement} element 
+ */
+const select = async (element) => {
+    let selectData = element.textContent;
+    queryBox.value = selectData;
+    searchWrapper.classList.remove("active");
+}
+
+/**
+ * show suggestions
+ * @param {array} list 
+ */
+const showSuggestions = async (list) => {
+    let listData;
+    if (!list.length) {
+        userValue = queryBox.value;
+        listData = `<li>${userValue}</li>`;
+    } else {
+        listData = list.join('');
+    }
+    suggBox.innerHTML = listData;
+}
+
+/**
+ * use to render suggestions
+ * @param {array} results 
+ */
+const makeSuggestions = async (results = []) => {
+    await showSuggestions(
+        results.map((data) => {
+            return data = `<li>${data}</li>`;
+        })
+    );
+
+    searchWrapper.classList.add("active");
+    let allList = suggBox.querySelectorAll("li");
+    for (let i = 0; i < allList.length; i++) {
+        //adding onclick attribute in all li tag
+        allList[i].setAttribute("onclick", "select(this)");
+    }
+}
+
+/**
  * load env.json file when document is loaded.
  * @param {string} key 
  * @returns 
@@ -248,6 +347,10 @@ const getEnv = async (key = "") => {
 }
 
 $(document).ready(async () => {
+    // initializing
     env = await getEnv()
     await initLoader()
+    searchWrapper = document.querySelector(".search-input");
+    suggBox = searchWrapper.querySelector(".autocom-box");
+    queryBox = document.getElementById("query")
 })

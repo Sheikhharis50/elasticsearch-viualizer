@@ -16,9 +16,13 @@
     <div>Loading...</div>
   </div>
 
-  <section>
+  <section class="search-input">
     <label for="query">Search Here...</label>
     <input type="text" name="query" id="query" onkeyup="onKeyPress(event)">
+    <label for="suggestions">Suggestions</label>
+    <div class="autocom-box" id="suggestions">
+      <!-- here list are inserted from javascript -->
+    </div>
     <button id="query-btn" onclick="handleSearch()">Search</button>
   </section>
 

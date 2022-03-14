@@ -89,3 +89,38 @@ img {
   font-size: 60px;
   width: min-content;
 }
+
+.search-input .autocom-box {
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  max-height: 280px;
+  margin-bottom: 1rem;
+  border: 1px solid gray;
+}
+
+.search-input.active .autocom-box {
+  opacity: 1;
+  pointer-events: auto;
+  min-width: 200px;
+}
+
+.autocom-box li {
+  list-style: none;
+  padding: 8px 12px;
+  display: none;
+  cursor: default;
+  border-radius: 3px;
+}
+
+.autocom-box li:not(:last-child) {
+  border-bottom: 1px solid grey;
+}
+
+.search-input.active .autocom-box li {
+  display: block;
+}
+
+.autocom-box li:hover {
+  background: #efefef;
+}
