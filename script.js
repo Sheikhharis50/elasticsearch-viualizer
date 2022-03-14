@@ -55,7 +55,7 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         "color",
         "price",
         "description",
-        "image",
+        "pictures",
     ]
     const preparedResults = await prepareNewData(results, columns)
     populate("search-result-1", columns, preparedResults, size)
@@ -162,9 +162,9 @@ const createTableBody = (tbody, columns = [], data = [], size) => {
         for (col of columns) {
             // store column value
             const tbodyCol = document.createElement("td")
-            if (col === "image") {
+            if (col === "pictures") {
                 const img = document.createElement("img")
-                img.src = record[col]
+                img.src = JSON.parse(record[col])["large"][0]
                 tbodyCol.appendChild(img)
             } else { tbodyCol.textContent = record[col] }
             tbodyRow.appendChild(tbodyCol)
