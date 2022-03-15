@@ -44,7 +44,7 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         query,
         group: {
             field: "product_id"
-        }
+        },
         page: {
             size: parseInt(size)
         }
