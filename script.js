@@ -45,6 +45,13 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         group: {
             field: "product_id"
         },
+        filters: {
+            none: [
+                {
+                    image: "https://dc964uidi8qge.cloudfront.net/OSFile/OS/ColorSwatch"
+                }
+            ]
+        },
         page: {
             size: parseInt(size)
         }
