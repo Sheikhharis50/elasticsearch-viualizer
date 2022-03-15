@@ -62,7 +62,7 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         "color",
         "price",
         "description",
-        "pictures",
+        "image",
     ]
     const preparedResults = await prepareNewData(results, columns)
     populate("search-result-1", columns, preparedResults, size)
@@ -86,11 +86,11 @@ const newSearchSuggestions = async (query = "", size = SUGGESTIONS_SIZE) => {
     const url = `${env["NEW_SEARCH_URL"]}/${engine}/query_suggestion`
     const columns = [
         "style_name",
-        // "group_name",
+        "group_name",
         "brand_name",
         "category",
-        // "sub_category",
-        "colors",
+        "sub_category",
+        "color",
     ]
     const data = {
         query,
@@ -204,9 +204,9 @@ const createTableBody = (tbody, columns = [], data = [], size) => {
         for (col of columns) {
             // store column value
             const tbodyCol = document.createElement("td")
-            if (col === "pictures") {
+            if (col === "image") {
                 const img = document.createElement("img")
-                img.src = JSON.parse(record[col])["large"][0]
+                img.src = record[col]
                 tbodyCol.appendChild(img)
             } else { tbodyCol.textContent = record[col] }
             tbodyRow.appendChild(tbodyCol)
