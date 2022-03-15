@@ -42,6 +42,9 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
     const url = `${env["NEW_SEARCH_URL"]}/${engine}/search`
     const data = {
         query,
+        group: {
+            field: "product_id"
+        }
         page: {
             size: parseInt(size)
         }
@@ -59,7 +62,7 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         "brand_name",
         "category",
         "sub_category",
-        "color",
+        "color_name",
         "price",
         "description",
         "image",
@@ -90,7 +93,7 @@ const newSearchSuggestions = async (query = "", size = SUGGESTIONS_SIZE) => {
         "brand_name",
         "category",
         "sub_category",
-        "color",
+        "color_name",
     ]
     const data = {
         query,
