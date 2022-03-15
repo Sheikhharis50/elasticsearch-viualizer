@@ -48,7 +48,7 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         filters: {
             none: [
                 {
-                    image: "https://dc964uidi8qge.cloudfront.net/OSFile/OS/ColorSwatch"
+                    image: "https://dc964uidi8qge.cloudfront.net/OSFile/OS/ColorSwatch/"
                 }
             ]
         },
