@@ -45,13 +45,7 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         group: {
             field: "product_id"
         },
-        filters: {
-            none: [
-                {
-                    image: "https://dc964uidi8qge.cloudfront.net/OSFile/OS/ColorSwatch/"
-                }
-            ]
-        },
+        filters: {},
         page: {
             size: parseInt(size)
         }
@@ -72,7 +66,7 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         "color_name",
         "price",
         "description",
-        "image",
+        "color_image",
     ]
     const preparedResults = await prepareNewData(results, columns)
     populate("search-result-1", columns, preparedResults, size)
@@ -214,7 +208,7 @@ const createTableBody = (tbody, columns = [], data = [], size) => {
         for (col of columns) {
             // store column value
             const tbodyCol = document.createElement("td")
-            if (col === "image") {
+            if (col === "color_image") {
                 const img = document.createElement("img")
                 img.src = record[col]
                 tbodyCol.appendChild(img)
