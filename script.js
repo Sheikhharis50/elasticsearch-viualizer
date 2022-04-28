@@ -42,13 +42,38 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
     const url = `${env["NEW_SEARCH_URL"]}/${engine}/search`
     const data = {
         query,
-        group: {
-            field: "product_id"
+        filters: {
+            none: [
+                {
+                    is_sold_out: ["Y", "1"]
+                },
+                {
+                    is_active: "N"
+                },
+                {
+                    vendor_active: "N"
+                },
+                {
+                    is_hidden: "Y"
+                },
+                {
+                    is_prepare: "Y"
+                }
+            ]
         },
-        filters: {},
+        sort: [
+            { "_score": "desc" },
+            { "created_date": "desc" },
+            { "popular_point_14": "desc" }
+        ],
+        group: {
+            field: "product_id",
+            collapse: true
+        },
         page: {
+            current: 1,
             size: parseInt(size)
-        }
+        },
     }
     const headers = {
         Authorization: `Bearer ${env["NEW_SEARCH_TOKEN"]}`,
