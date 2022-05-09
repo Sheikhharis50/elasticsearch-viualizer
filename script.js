@@ -66,10 +66,6 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
             { "created_date": "desc" },
             { "popular_point_14": "desc" }
         ],
-        group: {
-            field: "product_id",
-            collapse: true
-        },
         page: {
             current: 1,
             size: parseInt(size)
@@ -88,10 +84,9 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         "brand_name",
         "category",
         "sub_category",
-        "color_name",
         "price",
         "description",
-        "color_image",
+        "default_picture",
     ]
     const preparedResults = await prepareNewData(results, columns)
     populate("search-result-1", columns, preparedResults, size)
@@ -119,7 +114,7 @@ const newSearchSuggestions = async (query = "", size = SUGGESTIONS_SIZE) => {
         "brand_name",
         "category",
         "sub_category",
-        "color_name",
+        "color_list",
     ]
     const data = {
         query,
@@ -136,7 +131,6 @@ const newSearchSuggestions = async (query = "", size = SUGGESTIONS_SIZE) => {
     }
     const { results } = await fetchData(url, "POST", data, headers, false)
     const preparedResults = await prepareNewSuggestionsData(results, columns)
-    console.log(preparedResults);
     await makeSuggestions(preparedResults)
 }
 
@@ -233,7 +227,7 @@ const createTableBody = (tbody, columns = [], data = [], size) => {
         for (col of columns) {
             // store column value
             const tbodyCol = document.createElement("td")
-            if (col === "color_image") {
+            if (col === "default_picture") {
                 const img = document.createElement("img")
                 img.src = record[col]
                 tbodyCol.appendChild(img)
