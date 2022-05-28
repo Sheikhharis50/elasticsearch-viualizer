@@ -1,5 +1,5 @@
 const DEFAULT_SIZE = 15;
-const SUGGESTIONS_SIZE = 5;
+const SUGGESTIONS_SIZE = 8;
 let env, searchWrapper, suggBox, queryBox;
 
 /**
@@ -14,7 +14,7 @@ const onKeyPress = async (e) => {
         const size = document.getElementById("result-size").value
         await newSearch(query, size)
     } else {
-        if (query) {
+        if (query.length > 0 && /[a-zA-Z0-9-_ ]/.test(query)) {
             await newSearchSuggestions(query)
         }
         else { searchWrapper.classList.remove("active"); }
@@ -115,6 +115,9 @@ const newSearchSuggestions = async (query = "", size = SUGGESTIONS_SIZE) => {
         "category",
         "sub_category",
         "color_list",
+        "patterns",
+        "styles",
+        "sleeves",
     ]
     const data = {
         query,
@@ -306,9 +309,13 @@ const prepareNewData = async (results = [], columns = []) => {
  * @returns 
  */
 const prepareNewSuggestionsData = async (results = [], columns = []) => {
-    return results?.documents.map((obj, _) => {
-        return obj.suggestion
-    })
+    let suggestions = []
+    results?.documents.forEach(obj => {
+        suggestions = suggestions.concat(obj.suggestion.split(","))
+    });
+    return suggestions.filter((s, index) => {
+        return suggestions.indexOf(s) === index;
+    });
 }
 
 /**
