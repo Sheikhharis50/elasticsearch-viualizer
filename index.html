@@ -4,12 +4,21 @@
 <head>
   <title>Search Visualization</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <script src="jquery-3.5.1.js"></script>
-  <script src="script.js"></script>
+  <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
+  <link rel="stylesheet" href="/assets/css/globals.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script src="/assets/js/jquery-3.5.1.js"></script>
+  <script src="/assets/js/script.js"></script>
 </head>
 
 <body>
+
+  <header>
+    <h1 class="text-center">Search Visualization</h1>
+    <div class="d-flex justify-content-center">
+      <button onclick="goTo('/pages/more-like-this.html')">More Like This</button> &nbsp;
+    </div>
+  </header>
 
   <div class="loader">
     <div class="emoji">🕐</div>
@@ -45,9 +54,9 @@
   </section>
 
   <section>
-    <label for="search-result-1">New Search Results</label>
+    <label for="search-result">New Search Results</label>
     <div class="table-wrapper">
-      <table id="search-result-1" class="search-results">
+      <table id="search-result" class="search-results">
         <thead>
         </thead>
         <tbody>
@@ -60,26 +69,6 @@
       </table>
     </div>
   </section>
-
-  <section>
-    <label for="search-result-2">Production Search Results</label>
-    <div class="table-wrapper">
-      <table id="search-result-2" class="search-results">
-        <thead>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="text-align: center;">
-              Nothing is searched yet!
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-
-
 </body>
 
 </html>

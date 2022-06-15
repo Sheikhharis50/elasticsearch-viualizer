@@ -22,14 +22,21 @@ const onKeyPress = async (e) => {
 }
 
 /**
- * get query from searchBar and fire search calls.
- * @param {integer} size // for custom page size.
+ * get query from searchBar and fire search call.
  */
 const handleSearch = async () => {
     const query = queryBox.value
     const size = document.getElementById("result-size").value
     await newSearch(query, size)
-    await prodSearch(query, size)
+}
+
+/**
+ * get query from searchBar and fire more like this call.
+ */
+const handleMoreLikeThis = async () => {
+    const query = queryBox.value
+    const size = document.getElementById("result-size").value
+    await moreLikeThis(query, size)
 }
 
 /**
@@ -39,7 +46,7 @@ const handleSearch = async () => {
  */
 const newSearch = async (query = "", size = DEFAULT_SIZE) => {
     const engine = document.getElementById('engine').value
-    const url = `${env["NEW_SEARCH_URL"]}/${engine}/search`
+    const url = `${env["SEARCH_URL"]}/${engine}/search`
     const data = {
         query,
         filters: {
@@ -72,7 +79,7 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         },
     }
     const headers = {
-        Authorization: `Bearer ${env["NEW_SEARCH_TOKEN"]}`,
+        Authorization: `Bearer ${env["SEARCH_PUBLIC_TOKEN"]}`,
         "Content-Type": "application/json",
     }
     const { results } = await fetchData(url, "POST", data, headers)
@@ -89,15 +96,45 @@ const newSearch = async (query = "", size = DEFAULT_SIZE) => {
         "default_picture",
     ]
     const preparedResults = await prepareNewData(results, columns)
-    populate("search-result-1", columns, preparedResults, size)
+    populate("search-result", columns, preparedResults, size)
 }
 
 /**
- * use production search and populate data in table
- * @param {string} query 
- * @param {integer} size 
+ * use new search and populate data in table
+ * @param {string} document_id 
  */
-const prodSearch = async (query = "", size = DEFAULT_SIZE) => {
+const newSearchWithId = async (document_id = "") => {
+    const engine = document.getElementById('engine').value
+    const url = `${env["SEARCH_URL"]}/${engine}/search`
+    const data = {
+        query: "",
+        filters: {
+            all: [
+                {
+                    product_id: document_id
+                }
+            ],
+        },
+    }
+    const headers = {
+        Authorization: `Bearer ${env["SEARCH_PUBLIC_TOKEN"]}`,
+        "Content-Type": "application/json",
+    }
+    const { results } = await fetchData(url, "POST", data, headers)
+    const columns = [
+        "product_id",
+        "style_name",
+        "style_number",
+        "group_name",
+        "brand_name",
+        "category",
+        "sub_category",
+        "price",
+        "description",
+        "default_picture",
+        "color_list",
+    ]
+    return await prepareNewData(results, columns)
 }
 
 /**
@@ -107,7 +144,7 @@ const prodSearch = async (query = "", size = DEFAULT_SIZE) => {
  */
 const newSearchSuggestions = async (query = "", size = SUGGESTIONS_SIZE) => {
     const engine = document.getElementById('engine').value
-    const url = `${env["NEW_SEARCH_URL"]}/${engine}/query_suggestion`
+    const url = `${env["SEARCH_URL"]}/${engine}/query_suggestion`
     const columns = [
         "style_name",
         "group_name",
@@ -129,13 +166,84 @@ const newSearchSuggestions = async (query = "", size = SUGGESTIONS_SIZE) => {
         size
     }
     const headers = {
-        Authorization: `Bearer ${env["NEW_SEARCH_TOKEN"]}`,
+        Authorization: `Bearer ${env["SEARCH_PUBLIC_TOKEN"]}`,
         "Content-Type": "application/json",
     }
     const { results } = await fetchData(url, "POST", data, headers, false)
     const preparedResults = await prepareNewSuggestionsData(results, columns)
     await makeSuggestions(preparedResults)
 }
+
+/**
+ * use new search and populate data in table
+ * @param {string} query 
+ * @param {integer} size 
+ */
+const moreLikeThis = async (document_id = "", size = DEFAULT_SIZE) => {
+    // get document by document_id
+    const docs = await newSearchWithId(document_id)
+    if (docs.length <= 0) {
+        console.error("No document found")
+        return
+    }
+    const doc = docs[0]
+    const query = `${doc.brand_name} ${doc.group_name} ${doc.category} ${doc.sub_category} ${doc.color_list.split(",").join(" ")}`
+    const engine = document.getElementById('engine').value
+    const url = `${env["SEARCH_URL_V0"]}/${engine}/elasticsearch/_search`
+    const data = {
+        "request": {
+            "body": {
+                "from": 1,
+                "size": parseInt(size),
+                "query": {
+                    "more_like_this": {
+                        "fields": [
+                            "brand_name",
+                            "segment",
+                            "category",
+                            "sub_category",
+                            "style_name",
+                            "color_list"
+                        ],
+                        "like": query.toLowerCase(),
+                        "unlike": [
+                            {
+                                "_id": document_id
+                            }
+                        ],
+                        "min_term_freq": 1,
+                        "max_query_terms": 12
+                    }
+                }
+            },
+            "query_params": []
+        }
+
+    }
+    const headers = {
+        Authorization: `Bearer ${env["SEARCH_PRIVATE_TOKEN"]}`,
+        "Content-Type": "application/json",
+    }
+    const { hits: {
+        hits
+    } } = await fetchData(url, "POST", data, headers)
+    const columns = [
+        "product_id",
+        "style_name",
+        "style_number",
+        "group_name",
+        "brand_name",
+        "category",
+        "sub_category",
+        "price",
+        "description",
+        "default_picture",
+    ]
+
+    const preparedResults = await prepareMoreLikeThisData(hits, columns)
+    populate("search-result", columns, preparedResults, size)
+}
+
 
 /**
  * Fetch Data from api `url`
@@ -302,6 +410,23 @@ const prepareNewData = async (results = [], columns = []) => {
 }
 
 /**
+ * use to prepare more like this data before poplating to the 
+ * table.
+ * @param {array} results 
+ * @returns 
+ */
+const prepareMoreLikeThisData = async (results = [], columns = []) => {
+    return results.map((obj, _) => {
+        let newObj = {}
+        for (const [key, value] of Object.entries(obj._source)) {
+            if (columns.includes(key)) newObj[key] = value
+        }
+        return newObj
+    })
+}
+
+
+/**
  * use to prepare new search data before poplating to the 
  * table.
  * @param {array} results 
@@ -369,11 +494,20 @@ const makeSuggestions = async (results = []) => {
  */
 const getEnv = async (key = "") => {
     try {
-        const env = await $.getJSON("env.json")
+        const env = await $.getJSON("/env.json")
         return key ? env[key] : env
     } catch (error) {
         throw error
     }
+}
+
+/**
+ * redirect to given path.
+ * @param {string} path 
+ * @returns 
+ */
+const goTo = async (path = "/") => {
+    location.href = path
 }
 
 $(document).ready(async () => {
